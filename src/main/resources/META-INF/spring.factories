@@ -1,0 +1,3 @@
+# Registers and EnvironmentPostProcessor to customizes the application's {@link Environment} prior to the application
+# context being refreshed. Please see CustomRequestLoggingPropertiesPostProcessor javadoc
+org.springframework.boot.env.EnvironmentPostProcessor=ir.sahab.rest.common.requestlog.CustomRequestLoggingPropertiesPostProcessor
