@@ -10,4 +10,4 @@ This library contains out-of-the-box and ready to used modules for enabling some
  ## Add it to your project
 
 You can reference to this library by either of java build systems (Maven, Gradle, SBT or Leiningen) using snippets from this jitpack link:
-[![](https://jitpack.io/v/sahabpardaz/clean-up.svg)](https://jitpack.io/#sahabpardaz/clean-up)
+[![](https://jitpack.io/v/sahabpardaz/spring-boot-rest-commons.svg)](https://jitpack.io/#sahabpardaz/spring-boot-rest-commons)
