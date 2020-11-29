@@ -20,7 +20,7 @@ public @interface EnableCustomSecurity {
 
     Class<? extends Authenticator> authenticator() default BasicAuthenticator.class;
 
-    String applicationBasePathPattern() default "";
+    String applicationBasePathPattern() default "/**";
 
     /**
      * It overwrites the default Spring granted authority prefix (ROLE_).
