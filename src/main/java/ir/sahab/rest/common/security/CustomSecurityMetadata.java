@@ -30,7 +30,7 @@ public class CustomSecurityMetadata {
         applicationBasePathPattern = (String) allAnnotationAttributes.getFirst("applicationBasePathPattern");
         if (StringUtils.isEmpty(applicationBasePathPattern)) {
             throw new IllegalArgumentException(
-                    "You must provide application base path pattern!, eg. backend-api/** ");
+                    "You must provide application base path pattern!, eg. /backend-api/** ");
         }
     }
 

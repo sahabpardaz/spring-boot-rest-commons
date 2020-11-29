@@ -37,7 +37,7 @@ Introduce and enable this library in your SpringBoot application by adding the `
 
 ```java
 @SpringBootApplication
-@EnableCustomSecurity
+@EnableCustomSecurity()
 public class Application {
    ...
 }
@@ -74,8 +74,9 @@ public class Application {
 As you see there are two arguments passed to the @EnableCustomSecurity:
 
 - authenticator: it introduces a class should be used for authentication.
-- ignoredPaths: using this parameter, you can specify the paths under which the authentication/authorization checks
-    are disabled.
+- applicationBasePathPattern: specifies the base path pattern under which security (authentication/authorization) is
+enabled. By default, we will enable security on all paths: "/**"
+- ignoredPaths: excludes some paths to be ignored from base path. By default, no path is excluded. 
 
 Besides these parameters, you can also pass another argument `authorityPrefix`. By default, Spring adds the prefix
 "ROLE_" to the role names returned by the authentication object. But we do not like to manipulate the original role
@@ -234,6 +235,3 @@ You may think it is not secure the client tells its permissions, but in fact, yo
 is not called directly from the client but is proxied by a certified gateway that is responsible for providing the token.
 However, there are other approaches we can think of. For example in implementation of `Authenticator` it is possible to
 fill the roles/permissions after an inquiry from an external system like LDAP.
-Note that you do not need to force authentication on all REST paths. For example in this sample, we have ignored the
-path `"/ignored-auth/**"` by passing an argument to the `@EnableCustomSecurity` annotation. It is also possible to pass
-the base path for the authentication and exclude other paths by setting the `applicationBasePathPattern` argument.
