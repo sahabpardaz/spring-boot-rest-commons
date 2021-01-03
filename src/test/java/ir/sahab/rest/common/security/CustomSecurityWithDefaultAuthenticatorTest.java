@@ -1,11 +1,11 @@
 package ir.sahab.rest.common.security;
 
+import static ir.sahab.rest.common.security.HttpBasicAuthentication.AUTHORIZATION_HEADER;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import ir.sahab.rest.common.security.CustomSecurityWithDefaultAuthenticatorTest.RestServiceSetup;
 import ir.sahab.rest.common.testapp.TestOrderController;
-import java.util.Base64;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,8 +40,7 @@ public class CustomSecurityWithDefaultAuthenticatorTest {
         // default authenticator knows)
         mockMvc.perform(get(TestOrderController.REST_BASE_PATH + "/protected-api")
                 .accept(MediaType.APPLICATION_JSON)
-                .header("Authorization",
-                        "Basic " + Base64.getEncoder().encodeToString((TEST_VALID_USER_NAME + ":password").getBytes())))
+                .header(AUTHORIZATION_HEADER, HttpBasicAuthentication.of(TEST_VALID_USER_NAME,"pass")))
                 .andExpect(status().isOk());
     }
 
