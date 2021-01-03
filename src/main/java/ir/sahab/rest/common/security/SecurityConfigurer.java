@@ -22,6 +22,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.AuthenticationEntryPoint;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.access.AccessDeniedHandlerImpl;
@@ -45,6 +46,11 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private SecurityProblemSupport problemSupport;
+
+    public SecurityConfigurer() {
+        // Spring support for sending asynchronous processing of the requests with propagated SecurityContext.
+        SecurityContextHolder.setStrategyName(SecurityContextHolder.MODE_INHERITABLETHREADLOCAL);
+    }
 
     private final CustomSecurityMetadata customSecurityMetadata = CustomSecurityMetadata.getInstance();
 

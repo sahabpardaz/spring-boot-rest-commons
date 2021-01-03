@@ -38,8 +38,7 @@ public @interface EnableCustomSecurity {
         public String[] selectImports(AnnotationMetadata classMetadata) {
             CustomSecurityMetadata customSecurityMetadata = CustomSecurityMetadata.getInstance();
             customSecurityMetadata.fillFrom(classMetadata);
-            return new String[]{SecurityConfigurer.class.getName()};
+            return new String[] {SecurityConfigurer.class.getName()};
         }
-
     }
 }
