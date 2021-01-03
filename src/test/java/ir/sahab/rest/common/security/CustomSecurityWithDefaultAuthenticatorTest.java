@@ -40,7 +40,7 @@ public class CustomSecurityWithDefaultAuthenticatorTest {
         // default authenticator knows)
         mockMvc.perform(get(TestOrderController.REST_BASE_PATH + "/protected-api")
                 .accept(MediaType.APPLICATION_JSON)
-                .header(AUTHORIZATION_HEADER, HttpBasicAuthentication.of(TEST_VALID_USER_NAME,"pass")))
+                .header(AUTHORIZATION_HEADER, HttpBasicAuthentication.of(TEST_VALID_USER_NAME, "pass")))
                 .andExpect(status().isOk());
     }
 
@@ -52,5 +52,4 @@ public class CustomSecurityWithDefaultAuthenticatorTest {
             applicationBasePathPattern = "/api/**")
     public static class RestServiceSetup {
     }
-
 }

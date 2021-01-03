@@ -6,17 +6,16 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 /**
- * Utility class with a collection of static methods which help to do security-related things like getting current user
- * and so on.
+ * A utility class that simplifies getting name or checking authorities of current authenticated principal.
  */
-public final class SecurityUtil {
+public final class CurrentPrincipal {
 
-    private SecurityUtil() {
+    private CurrentPrincipal() {
     }
 
-    public static String getCurrentUser() {
+    public static String getName() {
         return null != SecurityContextHolder.getContext().getAuthentication()
-                ? SecurityContextHolder.getContext().getAuthentication().getName() : "admin";
+                ? SecurityContextHolder.getContext().getAuthentication().getName() : "";
     }
 
     public static boolean hasAuthority(String selectedAuthority) {

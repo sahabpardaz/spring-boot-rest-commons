@@ -3,7 +3,7 @@ package ir.sahab.rest.common.security;
 import java.util.Base64;
 
 /**
- * This class provides some static utility for HTTP basic authentication.
+ * This class helps making HTTP basic authentication header.
  */
 public class HttpBasicAuthentication {
 
