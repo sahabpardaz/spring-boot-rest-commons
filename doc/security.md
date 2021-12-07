@@ -14,7 +14,7 @@ system that does the session management. However, it is hidden from the RESTful 
 - For security errors, the client will get an HTTP response packet with proper status codes like 401 and 403 out of the
 box.
 - This library provides an easy way to implement your custom authentication/authorization mechanism. The simplest
-mechanism is [basic HTTP authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). This library
+mechanism is [Basic HTTP authentication](https://en.wikipedia.org/wiki/Basic_access_authentication). This library
 provides it by default. So you do not need to implement anything in this case. The user is extracted from the
 authorization header in requests, and you can access it from Spring `SecurityContext`. You can handle more complicated
 cases too. For example to recognize the user and find its roles/permissions, you may want to read a HTTP header
@@ -28,7 +28,7 @@ the `AuthenticationException` if the HTTP request does not contain valid authent
 
 ## Sample Usage
 
-Here we demonstrate two cases. One for a REST API with [basic HTTP authentication] mechanism and one for a more
+Here we demonstrate two cases. One for a REST API with [Basic HTTP authentication] mechanism and one for a more
 complicated authentication pattern.
 
 ### Basic HTTP Authentication
@@ -81,9 +81,10 @@ enabled. By default, we will enable security on all paths: "/**"
 Besides these parameters, you can also pass another argument `authorityPrefix`. By default, Spring adds the prefix
 "ROLE_" to the role names returned by the authentication object. But we do not like to manipulate the original role
 names, so we do not append anythings to those names. Using this parameter, you can define your own prefix of choice.
-At the next step, we are going to implement the `CustomAuthenticator` class:
+At the next step, we are going to implement the `CustomAuthenticator` class and register it as a Spring component:
 
 ```java
+@Component
 public class CustomAuthenticator implements Authenticator {
 
     private final ObjectMapper objectMapper;

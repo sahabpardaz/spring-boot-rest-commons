@@ -18,6 +18,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
@@ -83,6 +84,11 @@ public class ApiErrorMappingWithSecurityTest {
             applicationBasePathPattern = "/api/**",
             authenticator = TestAuthenticator.class)
     public static class RestServiceSetup {
+
+        @Bean
+        public Authenticator authenticator() {
+            return new TestAuthenticator();
+        }
     }
 
     public static class TestAuthenticator implements Authenticator {
