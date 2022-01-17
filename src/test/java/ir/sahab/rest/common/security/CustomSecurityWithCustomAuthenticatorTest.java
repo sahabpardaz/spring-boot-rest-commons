@@ -84,8 +84,7 @@ public class CustomSecurityWithCustomAuthenticatorTest {
     @EnableCustomSecurity(
             applicationBasePathPattern = "/api/**",
             ignoredPaths = TestOrderController.REST_BASE_PATH + "/ignored-path",
-            authorityPrefix = "orders.",
-            authenticator = TestAuthenticator.class)
+            authorityPrefix = "orders.")
     public static class RestServiceSetup {
 
         @Bean

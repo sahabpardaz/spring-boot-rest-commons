@@ -80,9 +80,7 @@ public class ApiErrorMappingWithSecurityTest {
             "ir.sahab.rest.common.testapp"
     })
     @EnableApiErrorMapping
-    @EnableCustomSecurity(
-            applicationBasePathPattern = "/api/**",
-            authenticator = TestAuthenticator.class)
+    @EnableCustomSecurity(applicationBasePathPattern = "/api/**")
     public static class RestServiceSetup {
 
         @Bean

@@ -20,9 +20,9 @@ authorization header in requests, and you can access it from Spring `SecurityCon
 cases too. For example to recognize the user and find its roles/permissions, you may want to read a HTTP header
 containing a [JWT token](https://jwt.io/) prepared by an
 [OAuth server](https://www.ory.sh/run-oauth2-server-open-source-api-security/).
-In such cases, you should just implement an `Authenticator` callback. The `Authenticator` gets the HTTP request as
-input and returns the corresponding `Authentication` object (representing a user and its roles/permissions) or throws
-the `AuthenticationException` if the HTTP request does not contain valid authentication data.
+In such cases, you should just implement an `Authenticator` callback and register it as a Spring bean. The `Authenticator`
+gets the HTTP request as input and returns the corresponding `Authentication` object (representing a user and its 
+roles/permissions) or throws the `AuthenticationException` if the HTTP request does not contain valid authentication data.
 - This library provides an easy-to-use annotation for SpringBoot to configure all of these at once:
 `@EnableCustomSecurity`
 
@@ -45,7 +45,7 @@ public class Application {
 ```
 
 Because we have not set an authenticator callback, the default (basic HTTP authentication) is enabled. Now when
-processing a request , we can read the `SecurityContext` to see the user/pass that is automatically extracted from the
+processing a request, we can read the `SecurityContext` to see the user/pass that is automatically extracted from the
 authorization header.
 
 ```java
@@ -59,13 +59,16 @@ public ResponseEntity<?> postRequest(HttpServletRequest request) {
 
 ### Custom Authentication
 
-Again we are going to enable our custom security by adding the `@EnableCustomSecurity` annotation, but this time a
-custom `Authenticator` implementation is introduced:
+Again we are going to enable our custom security by registering it as a Spring bean:
 
 ```java
 @SpringBootApplication
-@EnableCustomSecurity(authenticator = CustomAuthenticator.class, ignoredPaths = {"/ignored-auth/**"})
+@EnableCustomSecurity(applicationBasePathPattern= "/protected-api/**", ignoredPaths = {"/ignored-auth/**"})
 public class Application {
+   @Bean
+   public Authenticator authenticator() {
+       return new CustomAuthenticator();
+   }
    ...
 }
 
@@ -73,7 +76,6 @@ public class Application {
 
 As you see there are two arguments passed to the @EnableCustomSecurity:
 
-- authenticator: it introduces a class should be used for authentication.
 - applicationBasePathPattern: specifies the base path pattern under which security (authentication/authorization) is
 enabled. By default, we will enable security on all paths: "/**"
 - ignoredPaths: excludes some paths to be ignored from base path. By default, no path is excluded. 
@@ -81,7 +83,7 @@ enabled. By default, we will enable security on all paths: "/**"
 Besides these parameters, you can also pass another argument `authorityPrefix`. By default, Spring adds the prefix
 "ROLE_" to the role names returned by the authentication object. But we do not like to manipulate the original role
 names, so we do not append anythings to those names. Using this parameter, you can define your own prefix of choice.
-At the next step, we are going to implement the `CustomAuthenticator` class and register it as a Spring component:
+At the next step, we are going to implement the `CustomAuthenticator` class and register it as a Spring bean:
 
 ```java
 @Component
