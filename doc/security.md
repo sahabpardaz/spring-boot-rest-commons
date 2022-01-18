@@ -59,7 +59,8 @@ public ResponseEntity<?> postRequest(HttpServletRequest request) {
 
 ### Custom Authentication
 
-Again we are going to enable our custom security by registering it as a Spring bean:
+Again we are going to enable our custom security by adding the `@EnableCustomSecurity` annotation, but this time we
+register a bean as our custom `Authenticator` implementation:
 
 ```java
 @SpringBootApplication
@@ -83,10 +84,9 @@ enabled. By default, we will enable security on all paths: "/**"
 Besides these parameters, you can also pass another argument `authorityPrefix`. By default, Spring adds the prefix
 "ROLE_" to the role names returned by the authentication object. But we do not like to manipulate the original role
 names, so we do not append anythings to those names. Using this parameter, you can define your own prefix of choice.
-At the next step, we are going to implement the `CustomAuthenticator` class and register it as a Spring bean:
+At the next step, we are going to implement the `CustomAuthenticator` class:
 
 ```java
-@Component
 public class CustomAuthenticator implements Authenticator {
 
     private final ObjectMapper objectMapper;
