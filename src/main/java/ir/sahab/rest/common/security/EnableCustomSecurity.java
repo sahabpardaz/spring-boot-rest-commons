@@ -18,8 +18,6 @@ import org.springframework.core.type.AnnotationMetadata;
 @Import(CustomSecurityImporter.class)
 public @interface EnableCustomSecurity {
 
-    Class<? extends Authenticator> authenticator() default BasicAuthenticator.class;
-
     String applicationBasePathPattern() default "/**";
 
     /**

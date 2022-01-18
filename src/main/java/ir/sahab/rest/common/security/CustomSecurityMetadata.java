@@ -11,7 +11,6 @@ public class CustomSecurityMetadata {
 
     private static final CustomSecurityMetadata instance = new CustomSecurityMetadata();
 
-    private Class<? extends Authenticator> authenticatorClass;
     private String applicationBasePathPattern;
     private String[] ignoredPaths;
     private String authorityPrefix;
@@ -24,7 +23,6 @@ public class CustomSecurityMetadata {
     public void fillFrom(AnnotationMetadata securityAttributes) {
         MultiValueMap<String, Object> allAnnotationAttributes = securityAttributes
                 .getAllAnnotationAttributes(EnableCustomSecurity.class.getName());
-        authenticatorClass = (Class<? extends Authenticator>) allAnnotationAttributes.getFirst("authenticator");
         ignoredPaths = (String[]) allAnnotationAttributes.getFirst("ignoredPaths");
         authorityPrefix = (String) allAnnotationAttributes.getFirst("authorityPrefix");
         applicationBasePathPattern = (String) allAnnotationAttributes.getFirst("applicationBasePathPattern");
@@ -32,10 +30,6 @@ public class CustomSecurityMetadata {
             throw new IllegalArgumentException(
                     "You must provide application base path pattern!, eg. /backend-api/** ");
         }
-    }
-
-    public Class<? extends Authenticator> getAuthenticatorClass() {
-        return authenticatorClass;
     }
 
     public String getApplicationBasePathPattern() {

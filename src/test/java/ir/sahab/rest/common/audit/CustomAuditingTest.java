@@ -130,9 +130,7 @@ public class CustomAuditingTest {
     // security context to fill the createdBy and modifyBy fields.
     // The @EnableCustomSecurity is just one of the approaches for this reason. If you haven't security mechanism these
     // fields won't fill.
-    @EnableCustomSecurity(
-            applicationBasePathPattern = "/api/**",
-            authenticator = TestAuthenticator.class)
+    @EnableCustomSecurity(applicationBasePathPattern = "/api/**")
     public static class RestServiceSetup {
 
         @Bean

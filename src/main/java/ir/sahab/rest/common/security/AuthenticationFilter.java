@@ -18,15 +18,12 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
  */
 public final class AuthenticationFilter extends AbstractAuthenticationProcessingFilter {
 
-    private final Class<? extends Authenticator> authenticatorClass;
     private final ApplicationContext applicationContext;
     private Authenticator authenticator;
 
-    public AuthenticationFilter(ApplicationContext applicationContext,
-            Class<? extends Authenticator> authenticatorClass, RequestMatcher protectedUrls) {
+    public AuthenticationFilter(ApplicationContext applicationContext, RequestMatcher protectedUrls) {
         super(protectedUrls);
         this.applicationContext = applicationContext;
-        this.authenticatorClass = authenticatorClass;
     }
 
     @Override
@@ -47,10 +44,9 @@ public final class AuthenticationFilter extends AbstractAuthenticationProcessing
 
     private Authenticator getAuthenticator() {
         if (authenticator == null) {
-            if (authenticatorClass == BasicAuthenticator.class) {
+            authenticator = applicationContext.getBeanProvider(Authenticator.class).getIfAvailable();
+            if (authenticator == null) {
                 authenticator = new BasicAuthenticator();
-            } else {
-                authenticator = applicationContext.getBean(authenticatorClass);
             }
         }
         return authenticator;

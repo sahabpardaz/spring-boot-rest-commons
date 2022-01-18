@@ -105,10 +105,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
      */
     @Bean
     AuthenticationFilter authenticationFilter() throws Exception {
-        final AuthenticationFilter filter = new AuthenticationFilter(
-                getApplicationContext(),
-                customSecurityMetadata.getAuthenticatorClass(),
-                protectedPathMatcher);
+        final AuthenticationFilter filter = new AuthenticationFilter(getApplicationContext(), protectedPathMatcher);
         filter.setAuthenticationManager(authenticationManager());
         filter.setAuthenticationSuccessHandler(successHandler());
         AuthenticationEntryPoint authenticationEntryPoint =
