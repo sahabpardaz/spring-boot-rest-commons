@@ -64,8 +64,8 @@ public class ApiErrorMappingWithoutSecurityTest {
                 .andExpect(jsonPath("$.http_method").value("GET"))
                 .andExpect(jsonPath("$.timestamp").exists())
                 .andExpect(jsonPath("$.tracking_id").exists())
-                .andExpect(jsonPath("$.en_message")
-                        .value("Bad Request: Required String parameter 'name' is not present"))
+                .andExpect(jsonPath("$.en_message").value("Bad Request: "
+                        + "Required request parameter 'name' for method parameter type String is not present"))
                 .andExpect(jsonPath("$.fa_message").value("درخواست مربوطه با خطا مواجه شد."));
 
         // Required request body
@@ -203,7 +203,8 @@ public class ApiErrorMappingWithoutSecurityTest {
 
     @Test
     public void testApiException() throws Exception {
-        mockMvc.perform(get(REST_BASE_PATH + "/searchByName?name=NOT_AVAILABLE")
+        String productName = "NOT_AVAILABLE";
+        mockMvc.perform(get(REST_BASE_PATH + "/searchByName?name=" + productName)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest())
                 .andExpect(jsonPath("$.title").value(NOT_AVAILABLE_IN_STORE.getHttpStatusCode().getReasonPhrase()))
@@ -215,8 +216,10 @@ public class ApiErrorMappingWithoutSecurityTest {
                 .andExpect(jsonPath("$.timestamp").exists())
                 .andExpect(jsonPath("$.tracking_id").exists())
                 .andExpect(jsonPath("$.error_code").value(NOT_AVAILABLE_IN_STORE.name()))
-                .andExpect(jsonPath("$.en_message").value(NOT_AVAILABLE_IN_STORE.getEnMessage()))
-                .andExpect(jsonPath("$.fa_message").value(NOT_AVAILABLE_IN_STORE.getFaMessage()));
+                .andExpect(jsonPath("$.en_message")
+                        .value(String.format(NOT_AVAILABLE_IN_STORE.getEnMessage(), productName)))
+                .andExpect(jsonPath("$.fa_message")
+                        .value(String.format(NOT_AVAILABLE_IN_STORE.getFaMessage(), productName)));
     }
 
     @SpringBootApplication(scanBasePackages = "ir.sahab.rest.common.testapp")

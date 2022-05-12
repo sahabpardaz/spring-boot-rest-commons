@@ -8,28 +8,35 @@ import java.util.UUID;
  * @see ApiExceptionHandler
  */
 public class ApiException extends Exception {
+
     private static final long serialVersionUID = 1L;
 
     private final String trackingId = UUID.randomUUID().toString();
     private final ApiErrorCode error;
+    private final Object[] parameters;
     private final Object extraData;
 
     public ApiException(ApiErrorCode error) {
-        this(error, null, null);
+        this(error, null, null, new Object[0]);
     }
 
-    public ApiException(ApiErrorCode error, Throwable throwable) {
-        this(error, null, throwable);
+    public ApiException(ApiErrorCode error, Object... parameters) {
+        this(error, null, null, parameters);
     }
 
-    public ApiException(ApiErrorCode error, Object extraData) {
-        this(error, extraData, null);
+    public ApiException(ApiErrorCode error, Throwable throwable, Object... parameters) {
+        this(error, null, throwable, parameters);
     }
 
     public ApiException(ApiErrorCode error, Object extraData, Throwable throwable) {
+        this(error, extraData, throwable, new Object[0]);
+    }
+
+    public ApiException(ApiErrorCode error, Object extraData, Throwable throwable, Object... parameters) {
         super(error.getEnMessage(), throwable);
-        this.extraData = extraData;
         this.error = error;
+        this.extraData = extraData;
+        this.parameters = parameters;
     }
 
     /**
@@ -55,5 +62,12 @@ public class ApiException extends Exception {
      */
     public Object getExtraData() {
         return extraData;
+    }
+
+    /**
+     * Extra parameters injected to error code messages in case of formatted error message.
+     */
+    public Object[] getParameters() {
+        return parameters;
     }
 }

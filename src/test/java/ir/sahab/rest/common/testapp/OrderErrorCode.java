@@ -9,8 +9,9 @@ import org.zalando.problem.Status;
 public enum OrderErrorCode implements ApiErrorCode {
 
     // Common error codes
-    NOT_AVAILABLE_IN_STORE(Status.BAD_REQUEST, "There is not enough quantity of the requested product in the store.",
-            "به مقدار کافی از محصول مورد نظر در انبار موجود نیست");
+    NOT_AVAILABLE_IN_STORE(Status.BAD_REQUEST,
+            "There is not enough quantity of the requested product in the store: product = %s",
+            "به مقدار کافی از محصول مورد نظر در انبار موجود نیست: محصول = %s");
 
     private final Status status;
     private final String enMessage;

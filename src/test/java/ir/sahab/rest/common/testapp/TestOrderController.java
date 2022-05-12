@@ -2,9 +2,6 @@ package ir.sahab.rest.common.testapp;
 
 import ir.sahab.rest.common.apierror.ApiException;
 import java.io.IOException;
-import java.net.InetSocketAddress;
-import java.net.ServerSocket;
-import java.net.Socket;
 import java.util.List;
 import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -65,8 +62,7 @@ public class TestOrderController {
      */
     @GetMapping("/throwIOException")
     public void throwIoException() throws IOException {
-        Socket socket = new Socket();
-        socket.connect(new InetSocketAddress("127.0.0.1", anOpenPort()), 500);
+        throw new IOException("Connection refused (Connection refused)");
     }
 
     @PostMapping("/echo")
@@ -115,13 +111,5 @@ public class TestOrderController {
     @GetMapping("/protected-with-permission")
     @PreAuthorize("hasRole('sample.permission')")
     public void protectedWithPermission() {
-    }
-
-    private Integer anOpenPort() {
-        try (ServerSocket socket = new ServerSocket(0)) {
-            return socket.getLocalPort();
-        } catch (IOException e) {
-            throw new AssertionError("Unable to find an open port.", e);
-        }
     }
 }

@@ -42,7 +42,7 @@ public class TestOrderService {
     public List<TestOrderEntity> findByName(String name) throws ApiException {
         List<TestOrderEntity> result = testOrderRepository.findByName(name);
         if (result.isEmpty()) {
-            throw new ApiException(OrderErrorCode.NOT_AVAILABLE_IN_STORE);
+            throw new ApiException(OrderErrorCode.NOT_AVAILABLE_IN_STORE, name);
         }
         return result;
     }
