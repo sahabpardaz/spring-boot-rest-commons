@@ -41,8 +41,10 @@ public class ApiExceptionHandler implements ProblemHandling, SecurityAdviceTrait
     public ResponseEntity<Problem> handleApiException(final ApiException ex, final NativeWebRequest request) {
         ThrowableProblem problem = Problem.builder()
                 .with(ApiProblemField.TRACKING_ID.name().toLowerCase(), ex.getTrackingId())
-                .with(ApiProblemField.EN_MESSAGE.name().toLowerCase(), ex.getApiErrorCode().getEnMessage())
-                .with(ApiProblemField.FA_MESSAGE.name().toLowerCase(), ex.getApiErrorCode().getFaMessage())
+                .with(ApiProblemField.EN_MESSAGE.name().toLowerCase(),
+                        String.format(ex.getApiErrorCode().getEnMessage(), ex.getParameters()))
+                .with(ApiProblemField.FA_MESSAGE.name().toLowerCase(),
+                        String.format(ex.getApiErrorCode().getFaMessage(), ex.getParameters()))
                 .with(ApiProblemField.ERROR_CODE.name().toLowerCase(), ex.getApiErrorCode().getName())
                 .withDetail(String.valueOf(ex.getExtraData()))
                 .withStatus(ex.getApiErrorCode().getHttpStatusCode())
