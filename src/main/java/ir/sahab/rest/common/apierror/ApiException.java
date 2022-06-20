@@ -13,15 +13,15 @@ public class ApiException extends Exception {
 
     private final String trackingId = UUID.randomUUID().toString();
     private final ApiErrorCode error;
-    private final Object[] parameters;
+    private Object[] parameters;
     private final Object extraData;
 
     public ApiException(ApiErrorCode error) {
-        this(error, null, null, new Object[0]);
+        this(error, null);
     }
 
-    public ApiException(ApiErrorCode error, Object... parameters) {
-        this(error, null, null, parameters);
+    public ApiException(ApiErrorCode error, Object extraData) {
+        this(error, extraData, null, new Object[0]);
     }
 
     public ApiException(ApiErrorCode error, Throwable throwable, Object... parameters) {
@@ -69,5 +69,9 @@ public class ApiException extends Exception {
      */
     public Object[] getParameters() {
         return parameters;
+    }
+
+    public void setParameters(Object... parameters) {
+        this.parameters = parameters;
     }
 }
