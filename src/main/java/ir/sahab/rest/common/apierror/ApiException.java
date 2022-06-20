@@ -13,8 +13,9 @@ public class ApiException extends Exception {
 
     private final String trackingId = UUID.randomUUID().toString();
     private final ApiErrorCode error;
-    private Object[] parameters;
     private final Object extraData;
+
+    private Object[] parameters;
 
     public ApiException(ApiErrorCode error) {
         this(error, null);
@@ -71,7 +72,8 @@ public class ApiException extends Exception {
         return parameters;
     }
 
-    public void setParameters(Object... parameters) {
+    public ApiException setParameters(Object... parameters) {
         this.parameters = parameters;
+        return this;
     }
 }
