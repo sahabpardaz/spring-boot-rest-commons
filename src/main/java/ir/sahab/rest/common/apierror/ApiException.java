@@ -22,22 +22,14 @@ public class ApiException extends Exception {
     }
 
     public ApiException(ApiErrorCode error, Object extraData) {
-        this(error, extraData, null, new Object[0]);
-    }
-
-    public ApiException(ApiErrorCode error, Throwable throwable, Object... parameters) {
-        this(error, null, throwable, parameters);
+        this(error, extraData, null);
     }
 
     public ApiException(ApiErrorCode error, Object extraData, Throwable throwable) {
-        this(error, extraData, throwable, new Object[0]);
-    }
-
-    public ApiException(ApiErrorCode error, Object extraData, Throwable throwable, Object... parameters) {
         super(error.getEnMessage(), throwable);
         this.error = error;
         this.extraData = extraData;
-        this.parameters = parameters;
+        this.parameters = new Object[0];
     }
 
     /**
